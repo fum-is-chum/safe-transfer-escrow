@@ -3,8 +3,20 @@
   "version": "0.1.0",
   "description": "TypeScript SDK for the safe_transfer_escrow Sui Move package",
   "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fum-is-chum/safe-transfer-escrow.git",
+    "directory": "ts"
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
   "files": [
     "dist"
   ],
