@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      dotenv:
-        specifier: ^18.0.10
-        version: 18.0.10
     devDependencies:
       '@mysten/codegen':
         specifier: 0.12.24
@@ -22,11 +18,11 @@ importers:
         specifier: 2.39.1
         version: 2.39.1(typescript@5.9.3)
       '@scallop-io/sui-kit':
-        specifier: 2.2.0
-        version: 2.2.0(@mysten/sui@2.39.1(typescript@5.9.3))
+        specifier: 3.0.0
+        version: 3.0.0(@mysten/sui@2.39.1(typescript@5.9.3))
       '@scallop-io/sui-package-kit':
-        specifier: link:../../sui-package-kit
-        version: link:../../sui-package-kit
+        specifier: 2.0.0
+        version: 2.0.0(@mysten/sui@2.39.1(typescript@5.9.3))(@scallop-io/sui-kit@3.0.0(@mysten/sui@2.39.1(typescript@5.9.3)))
       '@tanstack/react-query':
         specifier: ^5.107.1
         version: 5.107.1(@types/react@19.3.0)(react@19.3.1)
@@ -42,6 +38,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^6.3.0
         version: 6.3.0(vite@8.3.8(@types/node@22.20.5)(esbuild@0.27.7)(tsx@4.23.15))
+      dotenv:
+        specifier: ^18.0.10
+        version: 18.0.10
       react:
         specifier: ^19.3.1
         version: 19.3.1
@@ -435,6 +434,9 @@ packages:
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
+  '@iarna/toml@2.2.5':
+    resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
+
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
 
@@ -802,11 +804,18 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@scallop-io/sui-kit@2.2.0':
-    resolution: {integrity: sha512-l1d6TucT6SWpIhFIbvxLVwTM/tQ3r75hgWUTkTCdSvWtLN5boh4ybd4MuRiWeYEKfK2svl23ivzBXmN36QqZqw==}
+  '@scallop-io/sui-kit@3.0.0':
+    resolution: {integrity: sha512-yCmNijWECaxV9WsiWK1aZoDT0HYPooRv2Vw+bMVEYDuOc7slu1IAzYNOe+qIjaOCnxapxWPZT+QtjwRTQLs0bw==}
     engines: {node: '>=22'}
     peerDependencies:
-      '@mysten/sui': ^2.0.0
+      '@mysten/sui': ~2.22.0
+
+  '@scallop-io/sui-package-kit@2.0.0':
+    resolution: {integrity: sha512-B3d9av1SWsUG8JYSvcS9FYVOcbPtqhmGzrJ+g8A5gbUl16ZyznnPHiUL6RkjSuqnrd4659IpqF0MIBmRjrbS1g==}
+    engines: {node: '>=22.12'}
+    peerDependencies:
+      '@mysten/sui': ^2.22.0
+      '@scallop-io/sui-kit': ^3.0.0
 
   '@scure/base@1.2.6':
     resolution: {integrity: sha512-g/nm5FgUa//MCj1gV09zTJTaM6KBAHqLN907YVQqf7zC49+DcO4B1so4ZX07Ef10Twr6nuqYEH9GEggFXA4Fmg==}
@@ -1029,6 +1038,10 @@ packages:
   chokidar@4.0.3:
     resolution: {integrity: sha512-Qgzu8kfBvo+cA4962jnP1KkS6Dop5NS6g7R5LFYJr4b8Ub94PPQXUksCw9PvXoeXPRRddRNC5C1JQUR2SMGtnA==}
     engines: {node: '>= 14.16.0'}
+
+  colorts@0.1.63:
+    resolution: {integrity: sha512-prWZKocUjLYvt9Jx4j+KEkeQSm9rvGA2ZB90Je6odMyXPthpb1pTW9/0RxUZ/CRXc+DsydMLOQIrDBgdx5jjOg==}
+    engines: {node: '>=8.1.90'}
 
   commander@13.1.0:
     resolution: {integrity: sha512-/rFeCpNJQbhSZjGVwO9RFV3xPqbnERS8MmIQzCtD/zl6gpJuV/bMLuN92oG3F7d8oDEHHRrujSXNUr8fpjntKw==}
@@ -1474,6 +1487,10 @@ packages:
     engines: {node: '>=16 || 14 >=14.17'}
     hasBin: true
 
+  superstruct@1.0.4:
+    resolution: {integrity: sha512-7JpaAoX2NGyoFlI9NBh66BQXGONc+uE+MRS5i2iOBKuS4e+ccgMDjATgZldkah+33DakBxDHiss9kvUcGAO8UQ==}
+    engines: {node: '>=14.0.0'}
+
   thenify-all@1.6.0:
     resolution: {integrity: sha512-RNxQH/qI8/t3thXJDwcstUO4zeqo64+Uy/+sNVRBx4Xn2OX+OZ9oP+iJnNFqplFra2ZUVeKCSa2oVWi3T4uVmA==}
     engines: {node: '>=0.8'}
@@ -1498,6 +1515,10 @@ packages:
   tinyrainbow@3.2.0:
     resolution: {integrity: sha512-LgO3D9yZJjApUiuUfl9iFAwrtaX4+lok3wJIqttGoKCHlWUqHqbQpnxCf82L8FjgKsh4iGo78hqJwgL8F6To2A==}
     engines: {node: '>=14.0.0'}
+
+  tmp@0.2.7:
+    resolution: {integrity: sha512-e0votIpp4Uo2AJYSzVHV6xCcawuiez3DzqDAbrTc3YxBkplN6e+dM13ZeIcZnDg/QpSuU2zfZ3rzwY8ukEnaXw==}
+    engines: {node: '>=14.14'}
 
   toml@5.0.1:
     resolution: {integrity: sha512-EqYNA/YvUNndrA2B3O2ojzLQoTQrBxeZ9UIjQwk8t10oe6n7dwclBwd9IdZQTOKwe6vWX+AXtl6IntXRbepdxQ==}
@@ -1894,6 +1915,8 @@ snapshots:
     dependencies:
       graphql: 17.1.0
 
+  '@iarna/toml@2.2.5': {}
+
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
       '@jridgewell/sourcemap-codec': 1.6.0
@@ -2227,13 +2250,22 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.68.2':
     optional: true
 
-  '@scallop-io/sui-kit@2.2.0(@mysten/sui@2.39.1(typescript@5.9.3))':
+  '@scallop-io/sui-kit@3.0.0(@mysten/sui@2.39.1(typescript@5.9.3))':
     dependencies:
       '@mysten/bcs': 2.1.4
       '@mysten/sui': 2.39.1(typescript@5.9.3)
       '@scure/bip39': 1.6.0
       assert: 2.1.0
       bech32: 2.0.0
+
+  '@scallop-io/sui-package-kit@2.0.0(@mysten/sui@2.39.1(typescript@5.9.3))(@scallop-io/sui-kit@3.0.0(@mysten/sui@2.39.1(typescript@5.9.3)))':
+    dependencies:
+      '@iarna/toml': 2.2.5
+      '@mysten/sui': 2.39.1(typescript@5.9.3)
+      '@scallop-io/sui-kit': 3.0.0(@mysten/sui@2.39.1(typescript@5.9.3))
+      colorts: 0.1.63
+      superstruct: 1.0.4
+      tmp: 0.2.7
 
   '@scure/base@1.2.6': {}
 
@@ -2464,6 +2496,8 @@ snapshots:
   chokidar@4.0.3:
     dependencies:
       readdirp: 4.1.2
+
+  colorts@0.1.63: {}
 
   commander@13.1.0: {}
 
@@ -2957,6 +2991,8 @@ snapshots:
       tinyglobby: 0.2.17
       ts-interface-checker: 0.1.13
 
+  superstruct@1.0.4: {}
+
   thenify-all@1.6.0:
     dependencies:
       thenify: 3.3.1
@@ -2977,6 +3013,8 @@ snapshots:
       picomatch: 4.0.7
 
   tinyrainbow@3.2.0: {}
+
+  tmp@0.2.7: {}
 
   toml@5.0.1: {}
 

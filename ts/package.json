@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "codegen": "sui-ts-codegen generate",
-    "build": "tsup ./src/index.ts --format esm --dts",
+    "build": "tsup",
     "typecheck": "tsc --noEmit && tsc -p tsconfig.test.json && tsc -p web/tsconfig.json && tsc -p publish/tsconfig.json",
     "test": "pnpm typecheck && vitest run",
     "test:watch": "vitest",
@@ -27,13 +27,14 @@
     "@mysten/codegen": "0.12.24",
     "@mysten/dapp-kit-react": "^2.1.45",
     "@mysten/sui": "2.39.1",
-    "@scallop-io/sui-kit": "2.2.0",
-    "@scallop-io/sui-package-kit": "link:../../sui-package-kit",
+    "@scallop-io/sui-kit": "3.0.0",
+    "@scallop-io/sui-package-kit": "2.0.0",
     "@tanstack/react-query": "^5.107.1",
     "@types/node": "^22.20.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.3.0",
+    "dotenv": "^18.0.10",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "tsup": "^8.3.0",
@@ -41,8 +42,5 @@
     "typescript": "^5.9.3",
     "vite": "^8.3.8",
     "vitest": "^4.1.11"
-  },
-  "dependencies": {
-    "dotenv": "^18.0.10"
   }
 }
