@@ -15,6 +15,7 @@ import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:f
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { Transaction } from '@scallop-io/sui-kit';
+import { EscrowIndex } from '../src/generated/safe_transfer_escrow/escrow.js';
 import { REPO_ROOT, buildOptions, getSuiKit, packagePublisher } from './elements.js';
 import { readResult, writeResult } from './result.js';
 
@@ -25,14 +26,12 @@ const owner = suiKit.currentAddress;
 const result = readResult();
 
 async function storedVersion(): Promise<number> {
-  const { data } = await suiKit.client.getObject({
-    id: result.indexId,
-    options: { showContent: true },
+  const { object } = await suiKit.client.core.getObject({
+    objectId: result.indexId,
+    include: { content: true },
   });
-  const content = data?.content;
-  if (content?.dataType !== 'moveObject') throw new Error(`EscrowIndex ${result.indexId} not found`);
 
-  return Number((content.fields as { version: string }).version);
+  return Number(EscrowIndex.parse(object.content).version);
 }
 
 /** Copies the package without tests into a temp dir with `VERSION` rewritten. */
@@ -58,14 +57,11 @@ async function tryGate(pkg: string): Promise<string> {
   const tx = new Transaction();
   const draft = tx.moveCall({ target: `${pkg}::escrow::new`, arguments: [tx.pure.address('0x1')] });
   tx.moveCall({ target: `${pkg}::escrow::send`, arguments: [draft, tx.object(result.indexId)] });
-  const inspected = await suiKit.client.devInspectTransactionBlock({
-    sender: owner,
-    transactionBlock: tx,
-  });
+  tx.setSender(owner);
+  const simulated = await suiKit.client.core.simulateTransaction({ transaction: tx });
+  const { status } = simulated.Transaction ?? simulated.FailedTransaction;
 
-  return inspected.effects.status.status === 'success'
-    ? 'succeeds'
-    : `aborts: ${inspected.effects.status.error}`;
+  return status.success ? 'succeeds' : `aborts: ${status.error.message}`;
 }
 
 const oldVersion = await storedVersion();
@@ -91,7 +87,7 @@ try {
 }
 if (!upgraded.packageId) throw new Error('Upgrade failed; see the response above');
 const latest = upgraded.packageId;
-await suiKit.client.waitForTransaction({ digest: upgraded.upgradeTxn.digest });
+await suiKit.client.core.waitForTransaction({ digest: upgraded.upgradeTxn.digest });
 
 // 2. Before migrate the old code still runs and the new code refuses.
 console.log(`before migrate: gate via old package ${await tryGate(previous)}`);
@@ -103,11 +99,10 @@ migrate.moveCall({
   target: `${latest}::escrow::migrate`,
   arguments: [migrate.object(result.indexId), migrate.object(result.adminCapId)],
 });
-const migrated = await suiKit.signAndSendTxn(migrate);
-if (migrated.effects?.status.status !== 'success') {
-  throw new Error(`Migrate failed: ${migrated.effects?.status.error}`);
-}
-await suiKit.client.waitForTransaction({ digest: migrated.digest });
+const migrateResult = await suiKit.signAndSendTxn(migrate);
+const migrated = migrateResult.Transaction ?? migrateResult.FailedTransaction;
+if (!migrated.status.success) throw new Error(`Migrate failed: ${migrated.status.error.message}`);
+await suiKit.client.core.waitForTransaction({ digest: migrated.digest });
 console.log(`migrated (tx ${migrated.digest}); stored version ${await storedVersion()}`);
 
 // 4. After migrate the new code runs and the old code is cut off.
