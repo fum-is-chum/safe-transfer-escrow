@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.test.json",
+  "compilerOptions": {
+    "types": ["node"],
+    // Both packages list no `types` in their `exports`, so point TypeScript at their typings.
+    "paths": {
+      "@scallop-io/sui-kit": ["../node_modules/@scallop-io/sui-kit/dist/index.d.ts"],
+      "@scallop-io/sui-package-kit": ["../node_modules/@scallop-io/sui-package-kit/dist/index.d.ts"]
+    }
+  },
+  "include": ["./**/*"]
+}

@@ -1,0 +1,146 @@
+:root {
+  color-scheme: light dark;
+  --border: color-mix(in srgb, currentColor 20%, transparent);
+  --error: #c0392b;
+  font-family: system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .panels {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  min-width: 0;
+}
+
+.muted {
+  opacity: 0.7;
+  font-size: 0.9rem;
+  margin: 4px 0;
+  overflow-wrap: anywhere;
+}
+
+.error {
+  color: var(--error);
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+.banner {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+.banner-error {
+  border-color: var(--error);
+}
+
+.list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  border-top: 1px solid var(--border);
+  padding: 8px 0;
+}
+
+.row > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.row > button {
+  flex-shrink: 0;
+}
+
+.row code {
+  overflow-wrap: anywhere;
+}
+
+.coins {
+  margin-top: 4px;
+}
+
+.coins li {
+  margin-bottom: 4px;
+}
+
+.coins code {
+  display: block;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.create {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid var(--border);
+  margin-top: 16px;
+  padding-top: 8px;
+}
+
+.create label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.coin-row {
+  display: flex;
+  gap: 8px;
+}
+
+/* A select sizes itself to its longest option; min-width: 0 lets it shrink and truncate instead. */
+.coin-row select {
+  flex: 2;
+  min-width: 0;
+  text-overflow: ellipsis;
+}
+
+.coin-row input {
+  flex: 1;
+  min-width: 0;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
