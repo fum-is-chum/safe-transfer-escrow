@@ -108,7 +108,7 @@ Accepted tradeoff per `CLAUDE.md`. Keep off-chain filtering (known-coin allowlis
 
 | Checklist | Status | Notes |
 |---|---|---|
-| `check-01` | ✅ Applied | `AdminCap`, sender-gating in `claim`/`refund` (needed: party objects take one owner) |
+| `check-01` | ✅ Applied | `AdminCap`, sender-gating in `claim`/`refund` |
 | `check-02` | ✅ Applied | Shared `Escrow` and `EscrowIndex`, contention (F-01), growth (F-03) |
 | `check-03` | ✅ Applied | Bag balances, zero amounts, merge, no math or precision paths |
 | `check-04` | ✅ Applied | Nested tables, inner-table create/drop, bag key by `TypeName` |

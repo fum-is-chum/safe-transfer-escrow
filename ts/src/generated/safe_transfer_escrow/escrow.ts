@@ -10,8 +10,6 @@
  * shared `EscrowIndex` maps both sides so either party can find pending transfers
  * on chain.
  * 
- * Party objects are not used: `transfer::party_transfer` accepts a single owner
- * only, so one party-owned escrow cannot serve both claim and refund.
  */
 
 import { MoveStruct, MoveEnum, normalizeMoveArguments, type RawTransactionArgument } from '../utils/index.js';

@@ -4,12 +4,14 @@
 /// when settled. A shared `EscrowIndex` maps both sides so either party can
 /// find pending transfers on chain.
 ///
-/// Party objects are not used: `transfer::party_transfer` accepts a single
-/// owner only, so one party-owned escrow cannot serve both claim and refund.
 module safe_transfer_escrow::escrow;
 
 use std::type_name::{Self, TypeName};
-use sui::{bag::{Self, Bag}, balance::Balance, coin::{Self, Coin}, event, table::{Self, Table}};
+use sui::bag::{Self, Bag};
+use sui::balance::Balance;
+use sui::coin::{Self, Coin};
+use sui::event;
+use sui::table::{Self, Table};
 
 // === Constants ===
 
@@ -247,7 +249,15 @@ fun settle(escrow: Escrow, index: &mut EscrowIndex, outcome: Outcome): Settlemen
     remove_entry(&mut index.by_recipient, recipient, escrow_id);
     id.delete();
 
-    Settlement { version: VERSION, escrow_id, sender, recipient, outcome, balances, coins: vector[] }
+    Settlement {
+        version: VERSION,
+        escrow_id,
+        sender,
+        recipient,
+        outcome,
+        balances,
+        coins: vector[],
+    }
 }
 
 fun add_entry(
